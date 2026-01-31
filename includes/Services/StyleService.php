@@ -48,9 +48,11 @@ class StyleService implements StyleServiceInterface {
 	 * @return void
 	 */
 	public function enqueue_styles(): void {
+		$css_url = $this->get_css_url();
+
 		wp_enqueue_style(
 			self::HANDLE,
-			plugin_dir_url( SIMPLE_DARK_MODE_FILE ) . 'build/css/dark-mode.min.css',
+			$css_url,
 			[],
 			SIMPLE_DARK_MODE_VERSION
 		);
@@ -60,6 +62,27 @@ class StyleService implements StyleServiceInterface {
 		if ( ! empty( $inline_css ) ) {
 			wp_add_inline_style( self::HANDLE, $inline_css );
 		}
+	}
+
+	/**
+	 * Get the CSS file URL, preferring hashed version for cache busting.
+	 *
+	 * @return string The CSS file URL.
+	 */
+	private function get_css_url(): string {
+		$build_dir  = SIMPLE_DARK_MODE_PATH . 'build/css/';
+		$plugin_url = plugin_dir_url( SIMPLE_DARK_MODE_FILE ) . 'build/css/';
+
+		// Try hashed version first (pattern: dark-mode.[hash].min.css).
+		$css_files = glob( $build_dir . 'dark-mode.*.min.css' );
+
+		if ( ! empty( $css_files ) ) {
+			$css_file = basename( $css_files[0] );
+			return $plugin_url . $css_file;
+		}
+
+		// Fallback to non-hashed version.
+		return $plugin_url . 'dark-mode.min.css';
 	}
 
 	/**
