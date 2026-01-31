@@ -1,0 +1,106 @@
+<?php
+/**
+ * Main Plugin Class
+ *
+ * Handles plugin initialization, dependency injection, and WordPress integration.
+ *
+ * @package JTZL\Simple_Dark_Mode
+ */
+
+namespace JTZL\Simple_Dark_Mode;
+
+use DI\Container;
+use JTZL\Simple_Dark_Mode\Services\FilterService;
+use JTZL\Simple_Dark_Mode\Services\StyleService;
+
+/**
+ * Main Plugin Class
+ *
+ * Handles plugin initialization, dependency injection, and WordPress integration.
+ */
+final class Plugin {
+
+	/**
+	 * The singleton instance.
+	 *
+	 * @var Plugin|null
+	 */
+	private static ?Plugin $instance = null;
+
+	/**
+	 * The dependency injection container instance.
+	 *
+	 * @var Container
+	 */
+	private Container $container;
+
+	/**
+	 * Get the singleton instance.
+	 *
+	 * @return Plugin The plugin instance.
+	 */
+	public static function instance(): Plugin {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Private constructor to enforce singleton pattern.
+	 */
+	private function __construct() {
+		$this->container = ContainerFactory::create();
+		$this->register_hooks();
+	}
+
+	/**
+	 * Register WordPress hooks.
+	 *
+	 * @return void
+	 */
+	private function register_hooks(): void {
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_frontend_styles' ] );
+	}
+
+	/**
+	 * Enqueue frontend styles.
+	 *
+	 * Only enqueues styles on the frontend, not in admin.
+	 *
+	 * @return void
+	 */
+	public function enqueue_frontend_styles(): void {
+		// Only on frontend, not admin.
+		if ( is_admin() ) {
+			return;
+		}
+
+		$filter_service = $this->container->get( FilterService::class );
+
+		if ( ! $filter_service->is_enabled() ) {
+			return;
+		}
+
+		$style_service = $this->container->get( StyleService::class );
+		$style_service->enqueue_styles();
+	}
+
+	/**
+	 * Get the dependency injection container.
+	 *
+	 * @return Container The container instance.
+	 */
+	public function get_container(): Container {
+		return $this->container;
+	}
+
+	/**
+	 * Reset the singleton instance (for testing purposes).
+	 *
+	 * @return void
+	 */
+	public static function reset_instance(): void {
+		self::$instance = null;
+	}
+}
