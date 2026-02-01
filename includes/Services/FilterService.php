@@ -9,6 +9,9 @@
 
 namespace JTZL\Simple_Dark_Mode\Services;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 use JTZL\Simple_Dark_Mode\Contracts\FilterServiceInterface;
 
 /**

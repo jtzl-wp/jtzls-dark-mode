@@ -9,6 +9,9 @@
 
 namespace JTZL\Simple_Dark_Mode\Contracts;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Style Service Interface
  *

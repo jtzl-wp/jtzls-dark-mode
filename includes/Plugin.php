@@ -9,6 +9,9 @@
 
 namespace JTZL\Simple_Dark_Mode;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 use DI\Container;
 use JTZL\Simple_Dark_Mode\Services\FilterService;
 use JTZL\Simple_Dark_Mode\Services\StyleService;

@@ -9,6 +9,9 @@
 
 namespace JTZL\Simple_Dark_Mode\Services;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 use JTZL\Simple_Dark_Mode\Contracts\FilterServiceInterface;
 use JTZL\Simple_Dark_Mode\Contracts\StyleServiceInterface;
 
@@ -108,14 +111,74 @@ class StyleService implements StyleServiceInterface {
 		if ( ! empty( $variables ) ) {
 			$var_declarations = [];
 			foreach ( $variables as $name => $value ) {
-				$var_declarations[] = sprintf( '%s: %s', $name, $value );
+				$sanitized_name  = $this->sanitize_css_variable_name( $name );
+				$sanitized_value = $this->sanitize_css_value( $value );
+
+				if ( null !== $sanitized_name && '' !== $sanitized_value ) {
+					$var_declarations[] = sprintf( '%s: %s', $sanitized_name, $sanitized_value );
+				}
 			}
-			$css .= '@media (prefers-color-scheme: dark) { :root { ' . implode( '; ', $var_declarations ) . '; } }';
+			if ( ! empty( $var_declarations ) ) {
+				$css .= '@media (prefers-color-scheme: dark) { :root { ' . implode( '; ', $var_declarations ) . '; } }';
+			}
 		}
 
 		if ( ! empty( $custom_css ) ) {
-			$css .= "\n" . $custom_css;
+			$sanitized_custom_css = $this->sanitize_css( $custom_css );
+			if ( '' !== $sanitized_custom_css ) {
+				$css .= "\n" . $sanitized_custom_css;
+			}
 		}
+
+		return $css;
+	}
+
+	/**
+	 * Sanitize a CSS custom property name.
+	 *
+	 * Only allows valid CSS custom property names (--prefix-name format).
+	 *
+	 * @param string $name The CSS variable name to sanitize.
+	 * @return string|null The sanitized name, or null if invalid.
+	 */
+	private function sanitize_css_variable_name( string $name ): ?string {
+		$name = trim( $name );
+
+		if ( preg_match( '/^--[a-zA-Z0-9_-]+$/', $name ) ) {
+			return $name;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Sanitize a CSS value to prevent XSS via style tag breakout.
+	 *
+	 * @param string $value The CSS value to sanitize.
+	 * @return string The sanitized value.
+	 */
+	private function sanitize_css_value( string $value ): string {
+		$value = trim( $value );
+
+		// Strip HTML tags and remove any potential style tag breakouts.
+		$value = wp_strip_all_tags( $value );
+		$value = preg_replace( '#<\s*/\s*style\s*>#i', '', $value );
+		$value = str_replace( [ '<', '>' ], '', $value );
+
+		return $value;
+	}
+
+	/**
+	 * Sanitize arbitrary CSS to prevent XSS via style tag breakout.
+	 *
+	 * @param string $css The CSS to sanitize.
+	 * @return string The sanitized CSS.
+	 */
+	private function sanitize_css( string $css ): string {
+		// Strip HTML tags and remove any potential style tag breakouts.
+		$css = wp_strip_all_tags( $css );
+		$css = preg_replace( '#<\s*/\s*style\s*>#i', '', $css );
+		$css = str_replace( [ '<', '>' ], '', $css );
 
 		return $css;
 	}

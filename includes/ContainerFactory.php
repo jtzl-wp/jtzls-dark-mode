@@ -9,6 +9,9 @@
 
 namespace JTZL\Simple_Dark_Mode;
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 use DI\Container;
 use DI\ContainerBuilder;
 use JTZL\Simple_Dark_Mode\Contracts\FilterServiceInterface;
@@ -62,14 +65,28 @@ class ContainerFactory {
 	/**
 	 * Configure compilation for the container builder.
 	 *
+	 * Uses wp-content/cache directory instead of plugin directory for security.
+	 *
 	 * @param ContainerBuilder $builder The container builder instance.
 	 * @return void
 	 */
 	private static function configure_compilation( ContainerBuilder $builder ): void {
-		$cache_dir = SIMPLE_DARK_MODE_PATH . 'var/cache';
+		$cache_dir = WP_CONTENT_DIR . '/cache/simple-dark-mode';
+
 		if ( ! file_exists( $cache_dir ) ) {
 			wp_mkdir_p( $cache_dir );
 		}
+
+		$index_file = $cache_dir . '/index.php';
+		if ( ! file_exists( $index_file ) ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Non-critical hardening file.
+			$result = file_put_contents( $index_file, "<?php\n// Silence is golden.\n" );
+			if ( false === $result ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for cache directory issues.
+				error_log( sprintf( 'Simple Dark Mode: failed to write index.php to %s', $index_file ) );
+			}
+		}
+
 		$builder->enableCompilation( $cache_dir );
 	}
 
