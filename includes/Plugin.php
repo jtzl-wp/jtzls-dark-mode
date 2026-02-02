@@ -101,9 +101,14 @@ final class Plugin {
 	/**
 	 * Reset the singleton instance (for testing purposes).
 	 *
+	 * @internal This method is intended for testing only.
+	 *
 	 * @return void
 	 */
-	public static function reset_instance(): void {
+	private static function reset_instance(): void {
+		if ( self::$instance instanceof self ) {
+			remove_action( 'wp_enqueue_scripts', [ self::$instance, 'enqueue_frontend_styles' ] );
+		}
 		self::$instance = null;
 	}
 }

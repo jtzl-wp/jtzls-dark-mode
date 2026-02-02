@@ -65,9 +65,11 @@ class ContainerFactory {
 	/**
 	 * Get the cache directory path.
 	 *
+	 * @internal This method is intended for internal use only.
+	 *
 	 * @return string The cache directory path.
 	 */
-	public static function get_cache_dir(): string {
+	private static function get_cache_dir(): string {
 		return WP_CONTENT_DIR . '/cache/simple-dark-mode';
 	}
 
