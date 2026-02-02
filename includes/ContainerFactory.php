@@ -63,31 +63,104 @@ class ContainerFactory {
 	}
 
 	/**
+	 * Get the cache directory path.
+	 *
+	 * @return string The cache directory path.
+	 */
+	public static function get_cache_dir(): string {
+		return WP_CONTENT_DIR . '/cache/simple-dark-mode';
+	}
+
+	/**
 	 * Configure compilation for the container builder.
 	 *
 	 * Uses wp-content/cache directory instead of plugin directory for security.
+	 * Includes version in class name for automatic cache invalidation on updates.
 	 *
 	 * @param ContainerBuilder $builder The container builder instance.
 	 * @return void
 	 */
 	private static function configure_compilation( ContainerBuilder $builder ): void {
-		$cache_dir = WP_CONTENT_DIR . '/cache/simple-dark-mode';
+		$cache_dir = self::get_cache_dir();
 
-		if ( ! file_exists( $cache_dir ) ) {
-			wp_mkdir_p( $cache_dir );
+		if ( ! self::ensure_cache_directory( $cache_dir ) ) {
+			return;
 		}
 
-		$index_file = $cache_dir . '/index.php';
-		if ( ! file_exists( $index_file ) ) {
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Non-critical hardening file.
-			$result = file_put_contents( $index_file, "<?php\n// Silence is golden.\n" );
-			if ( false === $result ) {
-				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for cache directory issues.
-				error_log( sprintf( 'Simple Dark Mode: failed to write index.php to %s', $index_file ) );
+		self::write_protection_file( $cache_dir . '/index.php', "<?php\n// Silence is golden.\n" );
+
+		// Include version in class name for automatic invalidation on plugin updates.
+		$version_suffix = preg_replace( '/[^a-zA-Z0-9_]/', '_', SIMPLE_DARK_MODE_VERSION );
+		$compiled_class = 'CompiledContainer_' . $version_suffix;
+
+		$builder->enableCompilation( $cache_dir, $compiled_class );
+	}
+
+	/**
+	 * Ensure the cache directory exists.
+	 *
+	 * @param string $cache_dir The cache directory path.
+	 * @return bool True if directory exists or was created, false on failure.
+	 */
+	private static function ensure_cache_directory( string $cache_dir ): bool {
+		if ( is_dir( $cache_dir ) ) {
+			return true;
+		}
+
+		if ( ! wp_mkdir_p( $cache_dir ) ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for cache directory issues.
+			error_log( sprintf( 'Simple Dark Mode: failed to create cache directory %s', $cache_dir ) );
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Write a protection file if it doesn't exist.
+	 *
+	 * @param string $file_path The file path to write.
+	 * @param string $content   The content to write.
+	 * @return bool True on success or file exists, false on failure.
+	 */
+	private static function write_protection_file( string $file_path, string $content ): bool {
+		if ( is_file( $file_path ) ) {
+			return true;
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- Non-critical hardening file.
+		$result = file_put_contents( $file_path, $content );
+		if ( false === $result ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for cache directory issues.
+			error_log( sprintf( 'Simple Dark Mode: failed to write protection file %s', $file_path ) );
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Clear the compiled container cache.
+	 *
+	 * Should be called on plugin activation/deactivation to ensure fresh container.
+	 *
+	 * @return void
+	 */
+	public static function clear_cache(): void {
+		$cache_dir = self::get_cache_dir();
+
+		if ( ! is_dir( $cache_dir ) ) {
+			return;
+		}
+
+		$files = (array) glob( $cache_dir . '/CompiledContainer*.php' );
+
+		foreach ( $files as $file ) {
+			if ( is_file( $file ) ) {
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink -- Direct filesystem access for cache cleanup.
+				unlink( $file );
 			}
 		}
-
-		$builder->enableCompilation( $cache_dir );
 	}
 
 	/**

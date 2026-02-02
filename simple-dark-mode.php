@@ -67,4 +67,28 @@ function init(): void {
 	Plugin::instance();
 }
 
+/**
+ * Plugin activation callback.
+ *
+ * Clears the DI container cache to ensure fresh compilation.
+ *
+ * @return void
+ */
+function activate(): void {
+	ContainerFactory::clear_cache();
+}
+
+/**
+ * Plugin deactivation callback.
+ *
+ * Clears the DI container cache for cleanup.
+ *
+ * @return void
+ */
+function deactivate(): void {
+	ContainerFactory::clear_cache();
+}
+
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\init' );
+register_activation_hook( __FILE__, __NAMESPACE__ . '\\activate' );
+register_deactivation_hook( __FILE__, __NAMESPACE__ . '\\deactivate' );
