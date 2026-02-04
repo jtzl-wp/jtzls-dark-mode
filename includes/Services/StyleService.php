@@ -7,6 +7,8 @@
  * @package JTZL\Simple_Dark_Mode\Services
  */
 
+declare(strict_types=1);
+
 namespace JTZL\Simple_Dark_Mode\Services;
 
 // Exit if accessed directly.
@@ -184,14 +186,9 @@ class StyleService implements StyleServiceInterface {
 	 * @return string The sanitized value.
 	 */
 	private function sanitize_css_value( string $value ): string {
+		// Trim first, then sanitize using shared logic.
 		$value = trim( $value );
-
-		// Strip HTML tags and remove any potential style tag breakouts.
-		$value = wp_strip_all_tags( $value );
-		$value = preg_replace( '#<\s*/\s*style\s*>#i', '', $value );
-		$value = str_replace( [ '<', '>' ], '', $value );
-
-		return $value;
+		return $this->perform_css_sanitization( $value );
 	}
 
 	/**
@@ -201,11 +198,36 @@ class StyleService implements StyleServiceInterface {
 	 * @return string The sanitized CSS.
 	 */
 	private function sanitize_css( string $css ): string {
-		// Strip HTML tags and remove any potential style tag breakouts.
-		$css = wp_strip_all_tags( $css );
-		$css = preg_replace( '#<\s*/\s*style\s*>#i', '', $css );
-		$css = str_replace( [ '<', '>' ], '', $css );
+		// Just delegate to shared logic (which returns untrimmed if passed untrimmed, but here we can return sanitized string).
+		// Note: The original sanitize_css did NOT trim. I will keep it consistent or just let perform_css_sanitization handle it.
+		// However, perform_css_sanitization uses wp_strip_all_tags which might not trim.
+		// Let's implement perform_css_sanitization to be robust.
+		return $this->perform_css_sanitization( $css );
+	}
 
-		return $css;
+	/**
+	 * Perform sanitization on a CSS string.
+	 *
+	 * @param string $css_string The string to sanitize.
+	 * @return string The sanitized string.
+	 */
+	private function perform_css_sanitization( string $css_string ): string {
+		// Strip HTML tags and remove any potential style tag breakouts.
+		$css_string = wp_strip_all_tags( $css_string );
+		$css_string = preg_replace( '#<\s*/\s*style\s*>#i', '', $css_string );
+		$css_string = str_replace( [ '<', '>' ], '', $css_string );
+
+		// Block potential protocol-based XSS (matches "javascript:", "vbscript:", "data:" at word boundaries).
+		// This also covers url("javascript:...") cases as the protocol is preceded by non-word characters.
+		if ( preg_match( '/\b(javascript|vbscript|data):/i', $css_string ) ) {
+			return '';
+		}
+
+		// Block expression (IE legacy XSS).
+		if ( stripos( $css_string, 'expression' ) !== false ) {
+			return '';
+		}
+
+		return $css_string;
 	}
 }

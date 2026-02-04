@@ -7,6 +7,8 @@
  * @package JTZL\Simple_Dark_Mode\Services
  */
 
+declare(strict_types=1);
+
 namespace JTZL\Simple_Dark_Mode\Services;
 
 // Exit if accessed directly.
