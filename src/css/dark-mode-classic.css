@@ -1,0 +1,80 @@
+/**
+ * Simple Dark Mode - Classic Theme Styles
+ * Uses color inversion for broad compatibility with classic themes
+ *
+ * @package JTZL\Simple_Dark_Mode
+ */
+
+@media (prefers-color-scheme: dark) {
+  /* CSS Custom Properties (available for custom CSS filter) */
+  :root {
+    --sdm-bg-primary: #1a1a1a;
+    --sdm-bg-secondary: #2d2d2d;
+    --sdm-text-primary: #e0e0e0;
+    --sdm-text-secondary: #a0a0a0;
+    --sdm-border-color: #404040;
+    --sdm-link-color: #6db3f2;
+    --sdm-link-hover: #8ec5f5;
+  }
+
+  /* Color scheme hint for browser */
+  html {
+    color-scheme: dark;
+  }
+
+  /* Invert entire page colors */
+  html {
+    filter: invert(1) hue-rotate(180deg);
+    background-color: #fff; /* Will become black after inversion */
+  }
+
+  /* Media Preservation - Double invert to restore original colors */
+  img,
+  picture,
+  video,
+  canvas,
+  svg,
+  iframe,
+  embed,
+  object {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+
+  /* WordPress block media elements */
+  figure img,
+  .wp-block-image img,
+  .wp-block-video video,
+  .wp-block-embed iframe,
+  .wp-block-gallery img {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+
+  /* WordPress embed wrappers */
+  .wp-block-embed__wrapper {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+
+  /* Google Maps embeds */
+  .google-maps-wrapper,
+  .gmap,
+  iframe[src*="google.com/maps"],
+  iframe[src*="maps.google.com"] {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+
+  /* YouTube and video embeds */
+  iframe[src*="youtube.com"],
+  iframe[src*="youtube-nocookie.com"],
+  iframe[src*="vimeo.com"],
+  iframe[src*="dailymotion.com"] {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+
+  /* WooCommerce product images */
+  .woocommerce-product-gallery img,
+  .woocommerce img.attachment-woocommerce_thumbnail,
+  .woocommerce-product-gallery__image img,
+  .products .product img {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+}

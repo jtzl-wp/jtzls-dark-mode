@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "bun run build:css && bun run hash:assets",
-    "build:css": "postcss src/css/dark-mode.css -o build/css/dark-mode.min.css",
+    "build:css": "postcss src/css/dark-mode-block.css -o build/css/dark-mode-block.min.css && postcss src/css/dark-mode-classic.css -o build/css/dark-mode-classic.min.css",
     "hash:assets": "bun run scripts/hash-assets.js",
     "build:prod": "bun run build",
     "dev": "bun run scripts/css-watch.js",

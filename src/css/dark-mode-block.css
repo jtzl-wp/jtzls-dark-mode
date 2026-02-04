@@ -1,0 +1,60 @@
+/**
+ * Simple Dark Mode - Block Theme Styles
+ * Uses CSS custom properties for FSE/block themes
+ *
+ * @package JTZL\Simple_Dark_Mode
+ */
+
+@media (prefers-color-scheme: dark) {
+  /* CSS Custom Properties for theming */
+  :root {
+    --sdm-bg-primary: #1a1a1a;
+    --sdm-bg-secondary: #2d2d2d;
+    --sdm-text-primary: #e0e0e0;
+    --sdm-text-secondary: #a0a0a0;
+    --sdm-border-color: #404040;
+    --sdm-link-color: #6db3f2;
+    --sdm-link-hover: #8ec5f5;
+  }
+
+  /* Base dark mode styles */
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--sdm-bg-primary);
+    color: var(--sdm-text-primary);
+  }
+
+  /* Links */
+  a {
+    color: var(--sdm-link-color);
+  }
+
+  a:hover,
+  a:focus {
+    color: var(--sdm-link-hover);
+  }
+
+  /* Common form elements */
+  input,
+  textarea,
+  select,
+  button {
+    background-color: var(--sdm-bg-secondary);
+    color: var(--sdm-text-primary);
+    border-color: var(--sdm-border-color);
+  }
+
+  /* Tables */
+  table,
+  th,
+  td {
+    border-color: var(--sdm-border-color);
+  }
+
+  th {
+    background-color: var(--sdm-bg-secondary);
+  }
+}

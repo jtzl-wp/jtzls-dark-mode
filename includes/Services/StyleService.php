@@ -37,12 +37,30 @@ class StyleService implements StyleServiceInterface {
 	private FilterServiceInterface $filter_service;
 
 	/**
+	 * Callable to check if current theme is a block theme.
+	 *
+	 * @var callable
+	 */
+	private $is_block_theme_callback;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param FilterServiceInterface $filter_service The filter service instance.
+	 * @param FilterServiceInterface $filter_service          The filter service instance.
+	 * @param callable|null          $is_block_theme_callback Optional callback to check block theme status.
 	 */
-	public function __construct( FilterServiceInterface $filter_service ) {
-		$this->filter_service = $filter_service;
+	public function __construct( FilterServiceInterface $filter_service, ?callable $is_block_theme_callback = null ) {
+		$this->filter_service          = $filter_service;
+		$this->is_block_theme_callback = $is_block_theme_callback ?? fn() => function_exists( 'wp_is_block_theme' ) && wp_is_block_theme();
+	}
+
+	/**
+	 * Check if the current theme is a block theme.
+	 *
+	 * @return bool True if block theme, false otherwise.
+	 */
+	public function is_block_theme(): bool {
+		return (bool) ( $this->is_block_theme_callback )();
 	}
 
 	/**
@@ -61,14 +79,19 @@ class StyleService implements StyleServiceInterface {
 		);
 
 		// Add inline CSS for filtered variables and custom rules.
-		$inline_css = $this->get_inline_css();
-		if ( ! empty( $inline_css ) ) {
-			wp_add_inline_style( self::HANDLE, $inline_css );
+		// Only for block themes - CSS variables don't work with classic theme's inversion strategy.
+		if ( $this->is_block_theme() ) {
+			$inline_css = $this->get_inline_css();
+			if ( ! empty( $inline_css ) ) {
+				wp_add_inline_style( self::HANDLE, $inline_css );
+			}
 		}
 	}
 
 	/**
 	 * Get the CSS file URL, preferring hashed version for cache busting.
+	 *
+	 * Uses block theme CSS for FSE themes, classic theme CSS (with inversion) for others.
 	 *
 	 * @return string The CSS file URL.
 	 */
@@ -76,8 +99,11 @@ class StyleService implements StyleServiceInterface {
 		$build_dir  = SIMPLE_DARK_MODE_PATH . 'build/css/';
 		$plugin_url = plugin_dir_url( SIMPLE_DARK_MODE_FILE ) . 'build/css/';
 
-		// Try hashed version first (pattern: dark-mode.[hash].min.css).
-		$css_files = glob( $build_dir . 'dark-mode.*.min.css' );
+		// Determine which CSS file to use based on theme type.
+		$css_base = $this->is_block_theme() ? 'dark-mode-block' : 'dark-mode-classic';
+
+		// Try hashed version first (pattern: dark-mode-{type}.[hash].min.css).
+		$css_files = glob( $build_dir . $css_base . '.*.min.css' );
 
 		if ( ! empty( $css_files ) ) {
 			$css_file = basename( $css_files[0] );
@@ -85,7 +111,7 @@ class StyleService implements StyleServiceInterface {
 		}
 
 		// Fallback to non-hashed version.
-		return $plugin_url . 'dark-mode.min.css';
+		return $plugin_url . $css_base . '.min.css';
 	}
 
 	/**

@@ -39,4 +39,11 @@ interface StyleServiceInterface {
 	 * @return string The generated inline CSS.
 	 */
 	public function get_inline_css(): string;
+
+	/**
+	 * Check if the current theme is a block theme.
+	 *
+	 * @return bool True if block theme, false otherwise.
+	 */
+	public function is_block_theme(): bool;
 }
