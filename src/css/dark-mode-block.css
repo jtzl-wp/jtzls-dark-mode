@@ -1,20 +1,20 @@
 /**
- * Simple Dark Mode - Block Theme Styles
+ * Inherited Dark - Block Theme Styles
  * Uses CSS custom properties for FSE/block themes
  *
- * @package JTZL\Simple_Dark_Mode
+ * @package JTZL\Inherited_Dark
  */
 
 @media (prefers-color-scheme: dark) {
   /* CSS Custom Properties for theming */
   :root {
-    --sdm-bg-primary: #1a1a1a;
-    --sdm-bg-secondary: #2d2d2d;
-    --sdm-text-primary: #e0e0e0;
-    --sdm-text-secondary: #a0a0a0;
-    --sdm-border-color: #404040;
-    --sdm-link-color: #6db3f2;
-    --sdm-link-hover: #8ec5f5;
+    --id-bg-primary: #1a1a1a;
+    --id-bg-secondary: #2d2d2d;
+    --id-text-primary: #e0e0e0;
+    --id-text-secondary: #a0a0a0;
+    --id-border-color: #404040;
+    --id-link-color: #6db3f2;
+    --id-link-hover: #8ec5f5;
   }
 
   /* Base dark mode styles */
@@ -23,18 +23,18 @@
   }
 
   body {
-    background-color: var(--sdm-bg-primary);
-    color: var(--sdm-text-primary);
+    background-color: var(--id-bg-primary);
+    color: var(--id-text-primary);
   }
 
   /* Links */
   a {
-    color: var(--sdm-link-color);
+    color: var(--id-link-color);
   }
 
   a:hover,
   a:focus {
-    color: var(--sdm-link-hover);
+    color: var(--id-link-hover);
   }
 
   /* Common form elements */
@@ -42,20 +42,20 @@
   textarea,
   select,
   button {
-    background-color: var(--sdm-bg-secondary);
-    color: var(--sdm-text-primary);
-    border-color: var(--sdm-border-color);
+    background-color: var(--id-bg-secondary);
+    color: var(--id-text-primary);
+    border-color: var(--id-border-color);
   }
 
   /* Tables */
   table,
   th,
   td {
-    border-color: var(--sdm-border-color);
+    border-color: var(--id-border-color);
   }
 
   th {
-    background-color: var(--sdm-bg-secondary);
+    background-color: var(--id-bg-secondary);
   }
 
   /* WordPress navigation responsive overlay (hamburger menu drawer).
@@ -65,22 +65,22 @@
      We must match or exceed that specificity and use !important to override. */
   .wp-block-navigation:not(.has-background)
     .wp-block-navigation__responsive-container.is-menu-open {
-    background-color: var(--sdm-bg-primary) !important;
+    background-color: var(--id-bg-primary) !important;
   }
 
   .wp-block-navigation:not(.has-text-color)
     .wp-block-navigation__responsive-container.is-menu-open {
-    color: var(--sdm-text-primary) !important;
+    color: var(--id-text-primary) !important;
   }
 
   .wp-block-navigation.has-background
     .wp-block-navigation__responsive-container.is-menu-open {
-    background-color: var(--sdm-bg-primary) !important;
+    background-color: var(--id-bg-primary) !important;
   }
 
   .wp-block-navigation.has-text-color
     .wp-block-navigation__responsive-container.is-menu-open {
-    color: var(--sdm-text-primary) !important;
+    color: var(--id-text-primary) !important;
   }
 
   .wp-block-navigation__responsive-container.is-menu-open
@@ -98,7 +98,7 @@
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-content
     a {
-    color: var(--sdm-link-color) !important;
+    color: var(--id-link-color) !important;
   }
 
   .wp-block-navigation__responsive-container.is-menu-open
@@ -107,12 +107,12 @@
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-container-content
     a:focus {
-    color: var(--sdm-link-hover) !important;
+    color: var(--id-link-hover) !important;
   }
 
   .wp-block-navigation__responsive-container.is-menu-open
     .wp-block-navigation__responsive-close {
-    color: var(--sdm-text-primary) !important;
+    color: var(--id-text-primary) !important;
   }
 
   .wp-block-navigation__responsive-container.is-menu-open
@@ -122,6 +122,6 @@
   }
 
   .wp-block-navigation__responsive-container-open {
-    color: var(--sdm-text-primary) !important;
+    color: var(--id-text-primary) !important;
   }
 }

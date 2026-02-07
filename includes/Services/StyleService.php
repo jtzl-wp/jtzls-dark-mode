@@ -4,18 +4,18 @@
  *
  * Handles CSS enqueueing and generation for dark mode.
  *
- * @package JTZL\Simple_Dark_Mode\Services
+ * @package JTZL\Inherited_Dark\Services
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Simple_Dark_Mode\Services;
+namespace JTZL\Inherited_Dark\Services;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-use JTZL\Simple_Dark_Mode\Contracts\FilterServiceInterface;
-use JTZL\Simple_Dark_Mode\Contracts\StyleServiceInterface;
+use JTZL\Inherited_Dark\Contracts\FilterServiceInterface;
+use JTZL\Inherited_Dark\Contracts\StyleServiceInterface;
 
 /**
  * Style Service
@@ -29,7 +29,7 @@ class StyleService implements StyleServiceInterface {
 	 *
 	 * @var string
 	 */
-	private const HANDLE = 'simple-dark-mode';
+	private const HANDLE = 'inherited-dark';
 
 	/**
 	 * The filter service instance.
@@ -77,7 +77,7 @@ class StyleService implements StyleServiceInterface {
 			self::HANDLE,
 			$css_url,
 			[],
-			SIMPLE_DARK_MODE_VERSION
+			INHERITED_DARK_VERSION
 		);
 
 		// Add inline CSS for filtered variables and custom rules.
@@ -98,8 +98,8 @@ class StyleService implements StyleServiceInterface {
 	 * @return string The CSS file URL.
 	 */
 	private function get_css_url(): string {
-		$build_dir  = SIMPLE_DARK_MODE_PATH . 'build/css/';
-		$plugin_url = plugin_dir_url( SIMPLE_DARK_MODE_FILE ) . 'build/css/';
+		$build_dir  = INHERITED_DARK_PATH . 'build/css/';
+		$plugin_url = plugin_dir_url( INHERITED_DARK_FILE ) . 'build/css/';
 
 		// Determine which CSS file to use based on theme type.
 		$css_base = $this->is_block_theme() ? 'dark-mode-block' : 'dark-mode-classic';

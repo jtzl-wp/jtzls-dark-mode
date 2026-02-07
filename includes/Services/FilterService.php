@@ -4,17 +4,17 @@
  *
  * Manages WordPress filter hooks for dark mode customization.
  *
- * @package JTZL\Simple_Dark_Mode\Services
+ * @package JTZL\Inherited_Dark\Services
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Simple_Dark_Mode\Services;
+namespace JTZL\Inherited_Dark\Services;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-use JTZL\Simple_Dark_Mode\Contracts\FilterServiceInterface;
+use JTZL\Inherited_Dark\Contracts\FilterServiceInterface;
 
 /**
  * Filter Service
@@ -29,25 +29,25 @@ class FilterService implements FilterServiceInterface {
 	 * @var array<string, string>
 	 */
 	private const DEFAULT_CSS_VARIABLES = [
-		'--sdm-bg-primary'     => '#1a1a1a',
-		'--sdm-bg-secondary'   => '#2d2d2d',
-		'--sdm-text-primary'   => '#e0e0e0',
-		'--sdm-text-secondary' => '#a0a0a0',
-		'--sdm-border-color'   => '#404040',
-		'--sdm-link-color'     => '#6db3f2',
-		'--sdm-link-hover'     => '#8ec5f5',
+		'--id-bg-primary'     => '#1a1a1a',
+		'--id-bg-secondary'   => '#2d2d2d',
+		'--id-text-primary'   => '#e0e0e0',
+		'--id-text-secondary' => '#a0a0a0',
+		'--id-border-color'   => '#404040',
+		'--id-link-color'     => '#6db3f2',
+		'--id-link-hover'     => '#8ec5f5',
 	];
 
 	/**
 	 * Check if dark mode should be enabled for current context.
 	 *
-	 * Filter: simple_dark_mode_enabled
+	 * Filter: inherited_dark_enabled
 	 * Allows disabling dark mode on specific pages.
 	 *
 	 * @return bool Whether dark mode is enabled.
 	 */
 	public function is_enabled(): bool {
-		$enabled = apply_filters( 'simple_dark_mode_enabled', true );
+		$enabled = apply_filters( 'inherited_dark_enabled', true );
 		// Ensure boolean return even if filter returns non-boolean.
 		return (bool) $enabled;
 	}
@@ -55,13 +55,13 @@ class FilterService implements FilterServiceInterface {
 	/**
 	 * Get filtered CSS variables.
 	 *
-	 * Filter: simple_dark_mode_css_variables
+	 * Filter: inherited_dark_css_variables
 	 * Allows customizing CSS variables.
 	 *
 	 * @return array<string, string> CSS variable name => value pairs.
 	 */
 	public function get_filtered_css_variables(): array {
-		$variables = apply_filters( 'simple_dark_mode_css_variables', self::DEFAULT_CSS_VARIABLES );
+		$variables = apply_filters( 'inherited_dark_css_variables', self::DEFAULT_CSS_VARIABLES );
 		// Ensure array return even if filter returns non-array.
 		return is_array( $variables ) ? $variables : self::DEFAULT_CSS_VARIABLES;
 	}
@@ -69,13 +69,13 @@ class FilterService implements FilterServiceInterface {
 	/**
 	 * Get additional custom CSS rules.
 	 *
-	 * Filter: simple_dark_mode_custom_css
+	 * Filter: inherited_dark_custom_css
 	 * Allows adding custom CSS rules.
 	 *
 	 * @return string Custom CSS rules.
 	 */
 	public function get_custom_css(): string {
-		$css = apply_filters( 'simple_dark_mode_custom_css', '' );
+		$css = apply_filters( 'inherited_dark_custom_css', '' );
 		// Ensure string return even if filter returns non-string.
 		return is_string( $css ) ? $css : '';
 	}

@@ -4,12 +4,12 @@
  *
  * Defines the contract for CSS enqueueing and generation.
  *
- * @package JTZL\Simple_Dark_Mode\Contracts
+ * @package JTZL\Inherited_Dark\Contracts
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Simple_Dark_Mode\Contracts;
+namespace JTZL\Inherited_Dark\Contracts;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;

@@ -4,19 +4,19 @@
  *
  * Handles plugin initialization, dependency injection, and WordPress integration.
  *
- * @package JTZL\Simple_Dark_Mode
+ * @package JTZL\Inherited_Dark
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Simple_Dark_Mode;
+namespace JTZL\Inherited_Dark;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 use DI\Container;
-use JTZL\Simple_Dark_Mode\Services\FilterService;
-use JTZL\Simple_Dark_Mode\Services\StyleService;
+use JTZL\Inherited_Dark\Services\FilterService;
+use JTZL\Inherited_Dark\Services\StyleService;
 
 /**
  * Main Plugin Class
