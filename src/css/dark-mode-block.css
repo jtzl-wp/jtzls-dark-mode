@@ -57,4 +57,71 @@
   th {
     background-color: var(--sdm-bg-secondary);
   }
+
+  /* WordPress navigation responsive overlay (hamburger menu drawer).
+     WordPress core sets background-color: #fff and color: #000 on the overlay
+     using high-specificity selectors with :not(.has-background) / :not(.has-text-color).
+     Inner items use color: inherit !important and background: transparent !important.
+     We must match or exceed that specificity and use !important to override. */
+  .wp-block-navigation:not(.has-background)
+    .wp-block-navigation__responsive-container.is-menu-open {
+    background-color: var(--sdm-bg-primary) !important;
+  }
+
+  .wp-block-navigation:not(.has-text-color)
+    .wp-block-navigation__responsive-container.is-menu-open {
+    color: var(--sdm-text-primary) !important;
+  }
+
+  .wp-block-navigation.has-background
+    .wp-block-navigation__responsive-container.is-menu-open {
+    background-color: var(--sdm-bg-primary) !important;
+  }
+
+  .wp-block-navigation.has-text-color
+    .wp-block-navigation__responsive-container.is-menu-open {
+    color: var(--sdm-text-primary) !important;
+  }
+
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation-item
+    .wp-block-navigation__submenu-container,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__container,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation-item,
+  .wp-block-navigation__responsive-container.is-menu-open .wp-block-page-list {
+    color: inherit !important;
+    background: transparent !important;
+  }
+
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content
+    a {
+    color: var(--sdm-link-color) !important;
+  }
+
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content
+    a:hover,
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-container-content
+    a:focus {
+    color: var(--sdm-link-hover) !important;
+  }
+
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-close {
+    color: var(--sdm-text-primary) !important;
+  }
+
+  .wp-block-navigation__responsive-container.is-menu-open
+    .wp-block-navigation__responsive-close
+    svg {
+    fill: currentColor;
+  }
+
+  .wp-block-navigation__responsive-container-open {
+    color: var(--sdm-text-primary) !important;
+  }
 }
