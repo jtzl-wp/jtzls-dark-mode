@@ -15,6 +15,7 @@
     --sdm-border-color: #404040;
     --sdm-link-color: #6db3f2;
     --sdm-link-hover: #8ec5f5;
+    --sdm-preserve-filter: invert(1) hue-rotate(180deg);
   }
 
   /* Color scheme hint for browser */
@@ -28,16 +29,18 @@
     background-color: #fff; /* Will become black after inversion */
   }
 
-  /* Media Preservation - Double invert to restore original colors */
+  /* Media Preservation - Double invert to restore original colors.
+     Note: svg is intentionally excluded. Inline SVGs in WordPress are
+     almost always UI icons that should invert with the page for proper
+     contrast. Content SVGs are typically delivered via <img> tags. */
   img,
   picture,
   video,
   canvas,
-  svg,
   iframe,
   embed,
   object {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter: var(--sdm-preserve-filter) !important;
   }
 
   /* WordPress block media elements */
@@ -46,12 +49,12 @@
   .wp-block-video video,
   .wp-block-embed iframe,
   .wp-block-gallery img {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter: var(--sdm-preserve-filter) !important;
   }
 
   /* WordPress embed wrappers */
   .wp-block-embed__wrapper {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter: var(--sdm-preserve-filter) !important;
   }
 
   /* Google Maps embeds */
@@ -59,7 +62,7 @@
   .gmap,
   iframe[src*="google.com/maps"],
   iframe[src*="maps.google.com"] {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter: var(--sdm-preserve-filter) !important;
   }
 
   /* YouTube and video embeds */
@@ -67,7 +70,7 @@
   iframe[src*="youtube-nocookie.com"],
   iframe[src*="vimeo.com"],
   iframe[src*="dailymotion.com"] {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter: var(--sdm-preserve-filter) !important;
   }
 
   /* WooCommerce product images */
@@ -75,6 +78,6 @@
   .woocommerce img.attachment-woocommerce_thumbnail,
   .woocommerce-product-gallery__image img,
   .products .product img {
-    filter: invert(1) hue-rotate(180deg) !important;
+    filter: var(--sdm-preserve-filter) !important;
   }
 }
