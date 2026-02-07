@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Inherited Dark
- * Plugin URI: https://github.com/jtzl/simple-dark-mode
+ * Plugin URI: https://wordpress.org/inherited-dark/
  * Description: Automatic dark mode styling based on visitor OS preference using CSS prefers-color-scheme
- * Version: 1.0.0-beta.1
+ * Version: 1.0.0
  * Requires at least: 6.9
  * Requires PHP: 8.2
  * Author: JT G.
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'INHERITED_DARK_VERSION', '1.0.0-beta.1' );
+define( 'INHERITED_DARK_VERSION', '1.0.0' );
 define( 'INHERITED_DARK_FILE', __FILE__ );
 define( 'INHERITED_DARK_PATH', plugin_dir_path( __FILE__ ) );
 
