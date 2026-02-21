@@ -4,22 +4,22 @@
  *
  * Configures and builds the PHP-DI container for the plugin.
  *
- * @package JTZL\Inherited_Dark
+ * @package JTZL\Inherited_Dark_Mode
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Inherited_Dark;
+namespace JTZL\Inherited_Dark_Mode;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 use DI\Container;
 use DI\ContainerBuilder;
-use JTZL\Inherited_Dark\Contracts\FilterServiceInterface;
-use JTZL\Inherited_Dark\Contracts\StyleServiceInterface;
-use JTZL\Inherited_Dark\Services\FilterService;
-use JTZL\Inherited_Dark\Services\StyleService;
+use JTZL\Inherited_Dark_Mode\Contracts\FilterServiceInterface;
+use JTZL\Inherited_Dark_Mode\Contracts\StyleServiceInterface;
+use JTZL\Inherited_Dark_Mode\Services\FilterService;
+use JTZL\Inherited_Dark_Mode\Services\StyleService;
 use function DI\autowire;
 use function DI\get;
 
@@ -72,7 +72,7 @@ class ContainerFactory {
 	 * @return string The cache directory path.
 	 */
 	private static function get_cache_dir(): string {
-		return WP_CONTENT_DIR . '/cache/inherited-dark';
+		return WP_CONTENT_DIR . '/cache/inherited-dark-mode';
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ContainerFactory {
 		self::write_protection_file( $cache_dir . '/index.php', "<?php\n// Silence is golden.\n" );
 
 		// Include version in class name for automatic invalidation on plugin updates.
-		$version_suffix = preg_replace( '/[^a-zA-Z0-9_]/', '_', INHERITED_DARK_VERSION );
+		$version_suffix = preg_replace( '/[^a-zA-Z0-9_]/', '_', INHERITED_DARK_MODE_VERSION );
 		$compiled_class = 'CompiledContainer_' . $version_suffix;
 
 		$builder->enableCompilation( $cache_dir, $compiled_class );
@@ -113,7 +113,7 @@ class ContainerFactory {
 
 		if ( ! wp_mkdir_p( $cache_dir ) ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for cache directory issues.
-			error_log( sprintf( 'Inherited Dark: failed to create cache directory %s', $cache_dir ) );
+			error_log( sprintf( 'Inherited Dark Mode: failed to create cache directory %s', $cache_dir ) );
 			return false;
 		}
 
@@ -136,7 +136,7 @@ class ContainerFactory {
 		$result = file_put_contents( $file_path, $content );
 		if ( false === $result ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for cache directory issues.
-			error_log( sprintf( 'Inherited Dark: failed to write protection file %s', $file_path ) );
+			error_log( sprintf( 'Inherited Dark Mode: failed to write protection file %s', $file_path ) );
 			return false;
 		}
 

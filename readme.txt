@@ -1,4 +1,4 @@
-=== Inherited Dark ===
+=== Inherited Dark Mode ===
 Contributors: jtzl
 Tags: dark mode, dark theme, prefers-color-scheme, accessibility, automatic
 Requires at least: 6.9
@@ -12,7 +12,7 @@ Automatic dark mode styling based on visitor OS preference using CSS prefers-col
 
 == Description ==
 
-Inherited Dark automatically applies dark mode styling to your WordPress site based on your visitors' operating system preferences. No configuration required - it just works.
+Inherited Dark Mode automatically applies dark mode styling to your WordPress site based on your visitors' operating system preferences. No configuration required - it just works.
 
 **Key Features:**
 
@@ -38,13 +38,13 @@ The plugin uses the CSS `prefers-color-scheme` media query to detect when a visi
 
 Customize the plugin behavior using these filter hooks:
 
-* `inherited_dark_enabled` - Enable/disable dark mode on specific pages
-* `inherited_dark_css_variables` - Customize dark mode colors
-* `inherited_dark_custom_css` - Add custom CSS rules
+* `inherited_dark_mode_enabled` - Enable/disable dark mode on specific pages
+* `inherited_dark_mode_css_variables` - Customize dark mode colors
+* `inherited_dark_mode_custom_css` - Add custom CSS rules
 
 == Installation ==
 
-1. Upload the `inherited-dark` folder to the `/wp-content/plugins/` directory
+1. Upload the `inherited-dark-mode` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. That's it! Dark mode will automatically apply based on visitor preferences
 
@@ -52,7 +52,7 @@ Customize the plugin behavior using these filter hooks:
 
 = Does this plugin require any configuration? =
 
-No. Inherited Dark works automatically without any settings or configuration.
+No. Inherited Dark Mode works automatically without any settings or configuration.
 
 = How does dark mode detection work? =
 
@@ -64,10 +64,10 @@ No. The plugin includes media preservation rules that ensure images, videos, ifr
 
 = Can I disable dark mode on specific pages? =
 
-Yes. Use the `inherited_dark_enabled` filter hook:
+Yes. Use the `inherited_dark_mode_enabled` filter hook:
 
 `
-add_filter( 'inherited_dark_enabled', function( $enabled ) {
+add_filter( 'inherited_dark_mode_enabled', function( $enabled ) {
     if ( is_page( 'landing-page' ) ) {
         return false;
     }
@@ -77,10 +77,10 @@ add_filter( 'inherited_dark_enabled', function( $enabled ) {
 
 = Can I customize the dark mode colors? =
 
-Yes. Use the `inherited_dark_css_variables` filter hook to override default CSS variables:
+Yes. Use the `inherited_dark_mode_css_variables` filter hook to override default CSS variables:
 
 `
-add_filter( 'inherited_dark_css_variables', function( $variables ) {
+add_filter( 'inherited_dark_mode_css_variables', function( $variables ) {
     $variables['--id-bg-primary'] = '#0d1117';
     $variables['--id-text-primary'] = '#f0f0f0';
     return $variables;
@@ -100,7 +100,7 @@ Note: CSS variables only apply to Block themes. Classic themes use filter invers
 
 = Does this work with Full Site Editing (FSE) themes? =
 
-Yes. Inherited Dark uses different styling strategies optimized for each theme type:
+Yes. Inherited Dark Mode uses different styling strategies optimized for each theme type:
 
 * Block themes (FSE): Uses CSS custom properties for precise color control
 * Classic themes: Uses CSS filter inversion for broad compatibility
@@ -113,10 +113,10 @@ No. Dark mode styling is applied only to the public-facing frontend of your site
 
 = Can I add custom CSS rules? =
 
-Yes. Use the `inherited_dark_custom_css` filter hook:
+Yes. Use the `inherited_dark_mode_custom_css` filter hook:
 
 `
-add_filter( 'inherited_dark_custom_css', function( $css ) {
+add_filter( 'inherited_dark_mode_custom_css', function( $css ) {
     return $css . '@media (prefers-color-scheme: dark) { .my-element { color: #fff; } }';
 } );
 `
@@ -143,4 +143,4 @@ add_filter( 'inherited_dark_custom_css', function( $css ) {
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of Inherited Dark.
+Initial release of Inherited Dark Mode.

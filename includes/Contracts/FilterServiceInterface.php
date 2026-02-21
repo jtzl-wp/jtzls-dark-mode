@@ -4,12 +4,12 @@
  *
  * Defines the contract for filter hook management.
  *
- * @package JTZL\Inherited_Dark\Contracts
+ * @package JTZL\Inherited_Dark_Mode\Contracts
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Inherited_Dark\Contracts;
+namespace JTZL\Inherited_Dark_Mode\Contracts;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;

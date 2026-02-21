@@ -1,7 +1,7 @@
 {
-  "name": "inherited-dark-assets",
+  "name": "inherited-dark-mode-assets",
   "version": "1.0.0",
-  "description": "Inherited Dark plugin assets - CSS build system",
+  "description": "Inherited Dark Mode plugin assets - CSS build system",
   "private": true,
   "type": "module",
   "scripts": {
