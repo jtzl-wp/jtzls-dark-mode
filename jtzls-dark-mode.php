@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Inherited Dark Mode
- * Plugin URI: https://wordpress.org/inherited-dark-mode/
+ * Plugin Name: JTZL's Dark Mode
+ * Plugin URI: https://wordpress.org/jtzls-dark-mode/
  * Description: Automatic dark mode styling based on visitor OS preference using CSS prefers-color-scheme
  * Version: 1.0.0
  * Requires at least: 6.9
@@ -9,15 +9,15 @@
  * Author: JT G.
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: inherited-dark-mode
+ * Text Domain: jtzls-dark-mode
  * Domain Path: /languages
  *
- * @package JTZL\Inherited_Dark_Mode
+ * @package JTZL\JTZL_Dark_Mode
  */
 
 declare(strict_types=1);
 
-namespace JTZL\Inherited_Dark_Mode;
+namespace JTZL\JTZL_Dark_Mode;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,9 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'INHERITED_DARK_MODE_VERSION', '1.0.0' );
-define( 'INHERITED_DARK_MODE_FILE', __FILE__ );
-define( 'INHERITED_DARK_MODE_PATH', plugin_dir_path( __FILE__ ) );
+define( 'JTZL_DARK_MODE_VERSION', '1.0.0' );
+define( 'JTZL_DARK_MODE_FILE', __FILE__ );
+define( 'JTZL_DARK_MODE_PATH', plugin_dir_path( __FILE__ ) );
 
 // PHP version check.
 if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
@@ -35,7 +35,7 @@ if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 		'admin_notices',
 		function () {
 			echo '<div class="notice notice-error"><p>';
-			echo esc_html__( 'Inherited Dark Mode requires PHP 8.2 or higher.', 'inherited-dark-mode' );
+			echo esc_html__( "JTZL's Dark Mode requires PHP 8.2 or higher.", 'jtzls-dark-mode' );
 			echo '</p></div>';
 		}
 	);
@@ -43,8 +43,8 @@ if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 }
 
 // Require Composer autoloader.
-if ( file_exists( INHERITED_DARK_MODE_PATH . 'vendor/autoload.php' ) ) {
-	require_once INHERITED_DARK_MODE_PATH . 'vendor/autoload.php';
+if ( file_exists( JTZL_DARK_MODE_PATH . 'vendor/autoload.php' ) ) {
+	require_once JTZL_DARK_MODE_PATH . 'vendor/autoload.php';
 }
 
 /**

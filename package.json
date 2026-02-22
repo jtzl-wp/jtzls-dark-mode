@@ -1,7 +1,7 @@
 {
-  "name": "inherited-dark-mode-assets",
+  "name": "jtzls-dark-mode-assets",
   "version": "1.0.0",
-  "description": "Inherited Dark Mode plugin assets - CSS build system",
+  "description": "JTZL's Dark Mode plugin assets - CSS build system",
   "private": true,
   "type": "module",
   "scripts": {

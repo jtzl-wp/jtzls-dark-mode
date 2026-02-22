@@ -1,8 +1,8 @@
 /**
- * Inherited Dark Mode - Block Theme Styles
+ * JTZL's Dark Mode - Block Theme Styles
  * Uses CSS custom properties for FSE/block themes
  *
- * @package JTZL\Inherited_Dark_Mode
+ * @package JTZL\JTZL_Dark_Mode
  */
 
 @media (prefers-color-scheme: dark) {

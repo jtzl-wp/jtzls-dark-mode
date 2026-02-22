@@ -1,6 +1,6 @@
 {
-  "name": "jtzl/inherited-dark-mode",
-  "description": "Inherited Dark Mode - Automatic dark mode styling based on OS preference for WordPress",
+  "name": "jtzl/jtzls-dark-mode",
+  "description": "JTZL's Dark Mode - Automatic dark mode styling based on OS preference for WordPress",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require": {
@@ -20,12 +20,12 @@
   },
   "autoload": {
     "psr-4": {
-      "JTZL\\Inherited_Dark_Mode\\": "includes/"
+      "JTZL\\JTZL_Dark_Mode\\": "includes/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "JTZL\\Inherited_Dark_Mode\\Tests\\": "tests/php/"
+      "JTZL\\JTZL_Dark_Mode\\Tests\\": "tests/php/"
     }
   },
   "config": {

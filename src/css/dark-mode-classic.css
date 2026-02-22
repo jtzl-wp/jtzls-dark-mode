@@ -1,8 +1,8 @@
 /**
- * Inherited Dark Mode - Classic Theme Styles
+ * JTZL's Dark Mode - Classic Theme Styles
  * Uses color inversion for broad compatibility with classic themes
  *
- * @package JTZL\Inherited_Dark_Mode
+ * @package JTZL\JTZL_Dark_Mode
  */
 
 @media (prefers-color-scheme: dark) {
