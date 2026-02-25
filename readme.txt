@@ -15,7 +15,7 @@ Automatic dark mode styling based on visitor OS preference using CSS prefers-col
 JTZL's Dark Mode automatically applies dark mode styling to your WordPress site based on your visitors' operating system preferences. No configuration required - it just works.
 
 Interactive demo:
-https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/jtzls-dark-mode/assets/blueprints/blueprint.json
+https://playground.wordpress.net/?blueprint-url=https://wordpress.org/plugins/wp-json/plugins/v1/plugin/jtzls-dark-mode/blueprint.json
 
 **Key Features:**
 
@@ -134,7 +134,7 @@ add_filter( 'jtzl_dark_mode_custom_css', function( $css ) {
 
 Yes. Launch a live preview in WordPress Playground:
 
-https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/jtzls-dark-mode/assets/blueprints/blueprint.json
+https://playground.wordpress.net/?blueprint-url=https://wordpress.org/plugins/wp-json/plugins/v1/plugin/jtzls-dark-mode/blueprint.json
 
 == Screenshots ==
 
