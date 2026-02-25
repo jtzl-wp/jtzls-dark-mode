@@ -21,7 +21,7 @@ namespace JTZL\JTZL_Dark_Mode;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit; // @codeCoverageIgnore
 }
 
 // Define plugin constants.
@@ -30,7 +30,7 @@ define( 'JTZL_DARK_MODE_FILE', __FILE__ );
 define( 'JTZL_DARK_MODE_PATH', plugin_dir_path( __FILE__ ) );
 
 // PHP version check.
-if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
+if ( version_compare( PHP_VERSION, '8.2', '<' ) ) { // @codeCoverageIgnoreStart
 	add_action(
 		'admin_notices',
 		function () {
@@ -40,7 +40,7 @@ if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
 		}
 	);
 	return;
-}
+} // @codeCoverageIgnoreEnd
 
 // Require Composer autoloader.
 if ( file_exists( JTZL_DARK_MODE_PATH . 'vendor/autoload.php' ) ) {
