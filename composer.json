@@ -11,7 +11,6 @@
     "deptrac/deptrac": "^2.0",
     "php-stubs/wordpress-stubs": "^6.9",
     "phpcompatibility/phpcompatibility-wp": "*",
-    "phploc/phploc": "^7.0",
     "phpmd/phpmd": "^2.15",
     "phpmetrics/phpmetrics": "^2.9",
     "phpstan/extension-installer": "^1.4",
@@ -46,10 +45,6 @@
     "lint": "@php ./vendor/bin/phpcs . --report=summary,source",
     "lint:errors": "@lint -n",
     "deptrac": "@php ./vendor/bin/deptrac analyze --config-file=deptrac.yaml",
-    "metrics:phploc": [
-      "mkdir -p build/reports",
-      "@php ./vendor/bin/phploc --count-tests --log-csv build/reports/phploc.csv includes jtzls-dark-mode.php"
-    ],
     "metrics:phpmetrics": [
       "mkdir -p build/reports/phpmetrics",
       "@php -d error_reporting=E_ERROR ./vendor/bin/phpmetrics --exclude=tests,vendor,node_modules,demo-video,build,.github,bin,scripts,stubs,languages --report-json=build/reports/phpmetrics.json --report-summary-json=build/reports/phpmetrics-summary.json --report-html=build/reports/phpmetrics ."
@@ -59,9 +54,9 @@
       "@php -r \"echo 'PHPMD: no size/complexity anomalies found.' . PHP_EOL;\""
     ],
     "metrics:size": [
-      "@metrics:phploc",
       "@metrics:phpmetrics"
     ],
+    "metrics:guard": "@php ./bin/check-phpmetrics-thresholds",
     "anomaly": [
       "@deptrac",
       "@metrics:phpmd"
